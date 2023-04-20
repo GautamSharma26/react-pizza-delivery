@@ -1,6 +1,7 @@
 import axios from "axios";
 import { userDetail, shopDetail } from "./Slice/TokenSlice";
 // import { fetchCustomerDetail } from "./Slice/TokenSlice";
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -11,12 +12,12 @@ export async function FetchUserDetail(dispatch) {
             "access": accesstokenvalue
         },)
         .then(res => {
-            console.log(res.data,"user")
             dispatch(userDetail(res.data))
             if ((res.data.user[0].is_shop_owner)===true){
                 const y = shopUserDetail(res.data.user[0].id,dispatch,accesstokenvalue);
                 return y
             }
+         
             // else{
             //     dispatch(fetchCustomerDetail({id:res.data.user[0].id}))
             // }

@@ -8,6 +8,7 @@ const CartItem = () => {
   const user = useSelector(state => state.tokenData.user)
   useEffect(() => {
     function handleOnDispatch() {
+      console.log(user,"user");
 
       user.length !== 0 &&
         dispatch(getCart({ id: user['id'] }))
@@ -24,6 +25,7 @@ const CartItem = () => {
 
 
   return (
+    
     // <>{cartData.pizza[0].price}</>
     <section style={{
       position: "absolute",
@@ -42,7 +44,7 @@ const CartItem = () => {
                   className="fas fa-angle-down mt-1"></i></a></p>
               </div>
             </div>
-            {cartData && cartData.data_pizza.map((Cart, index) => {
+            {cartData ? cartData.data_pizza.map((Cart, index) => {
               console.log(Cart);
               return (
 
@@ -63,22 +65,6 @@ const CartItem = () => {
                         <div className="col-md-3 col-lg-3 col-xl-3">
                           <p><span className="text-muted">Quantity: </span>{Cart.quantity}</p>
                         </div>
-
-
-                        {/* <div className="col-md-3 col-lg-3 col-xl-2 d-flex">
-                          <button className="btn btn-link px-2"
-                            onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
-                            <i className="fas fa-minus"></i>
-                          </button>
-
-                          <input id="form1" min="0" name="quantity" type="number"
-                            className="form-control form-control-sm" />
-
-                          <button className="btn btn-link px-2"
-                            onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
-                            <i className="fas fa-plus"></i>
-                          </button>
-                        </div> */}
                         <div className="col-md-3 col-lg-3 col-xl-3">
                           <p><span className="text-muted">Price Per Pizza: </span>{Cart.pizza_data['price']}</p>
                         </div>
@@ -90,22 +76,30 @@ const CartItem = () => {
                   </div>
                 </Fragment>
               )
-            })}
-            {cartData && <div className="card">
+            }):<><div className="card">
+            <div className="card-body">
+              <h3>No Items Available In Your Cart</h3>
+            </div>
+          </div></>
+            }
+            {cartData && <><div className="card">
               <div className="card-body">
                 <h2>Total Price :  {cartData.total_amount}</h2>
               </div>
-            </div>}
+            </div>
             <div className="card">
               <div className="card-body">
                 <button type="button" className="btn btn-warning btn-block btn-lg">Proceed to Checkout</button>
               </div>
             </div>
+            </>
+            }
 
           </div>
         </div>
       </div>
     </section>
+    
   )
 }
 

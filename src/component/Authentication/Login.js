@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useDispatch } from "react-redux";
+import { useDispatch,useSelector } from "react-redux";
 import logoLogin from "../../images/logologin.jpeg";
 import { Link, useNavigate } from "react-router-dom";
 import { storeToken, loginStatus } from "./Slice/TokenSlice";
@@ -11,6 +11,8 @@ function UserLogin() {
     
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const user = useSelector(state => state.tokenData.user)
+    // console.log(user,"lk");
     // console.log(refreshtokenvalue,"r",accesstokenvalue)
     // const accesstokenvalue = useSelector((state)=>state.tokenData.accesstoken)
     const [email, SetEmail] = useState('');
@@ -28,6 +30,7 @@ function UserLogin() {
                 dispatch(storeToken(res.data))
                 setTextStatus(res.statusText)
                 dispatch(loginStatus(value))
+                console.log(user);
                 navigate("/user")
             })
             .catch(err => {
@@ -35,6 +38,7 @@ function UserLogin() {
             })
     }
     useEffect(() => {
+        console.log(user);
         SetEmail('');
         setPassword('');
     }, [textStatus])

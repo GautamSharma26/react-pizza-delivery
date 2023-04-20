@@ -49,9 +49,9 @@ const Navbar = () => {
                             Opt! One
                         </a>
                         <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <Link to="/shopAdd" className="dropdown-item">Add Shop</Link>
+                            <Link to="/shop-owner/shopAdd" className="dropdown-item">Add Shop</Link>
                             <Link to="/shop-list" className="dropdown-item">View All Shop</Link>
-                            <Link to="shop-owner/add-pizza" className="dropdown-item">Add Pizza</Link>
+                            <Link to="/shop-owner/add-pizza" className="dropdown-item">Add Pizza</Link>
                             <Link to="/user" className="dropdown-item">Customer</Link>
                             <Link to="/user/cart" className="dropdown-item">Cart</Link>
                             <div className="dropdown-divider"></div>
@@ -60,10 +60,7 @@ const Navbar = () => {
                         </div>
                     </li>
                 </ul>
-                <form className="form-inline my-2 my-lg-0">
-                    <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
-                    <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                </form>
+               
             </div>
         </nav>
         </>

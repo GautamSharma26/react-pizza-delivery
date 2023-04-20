@@ -22,7 +22,7 @@ const CreateAddress = (props) => {
     function addAddress(e) {
         e.preventDefault();
         dispatch(createAddress({ data: storeaddress }))
-            .then(res => { navigate("user/show-address") })
+            .then(res => { navigate("/user/show-address") })
             .catch(err => { console.log(err, "err"); })
     }
 

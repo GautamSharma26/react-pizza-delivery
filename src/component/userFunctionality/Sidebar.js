@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import ShowAddress from './ShowAddress';
 import CreateAddress from './CreateAddress';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const Sidebar = () => {
     const navigate = useNavigate();
     const [addressadd, setAddressAdd] = useState("false")
-    // const user = useSelector(state=>state.tokenData.user)
-    // console.log(user['first_name'],"user")
+    const user = useSelector(state=>state.tokenData.user)
+    console.log(user['first_name'],"user")
     // const navigate = useNavigate();
     // const dispatch = useDispatch();
     console.log(addressadd, "lklk");

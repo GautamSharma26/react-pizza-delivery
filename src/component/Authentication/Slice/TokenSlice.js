@@ -10,7 +10,8 @@ const initialState = {
     data: [],
     user:[],
     address:[],
-    cart_data:[]
+    cart_data:[],
+    pizza_data:[]
 }
 
 export const deletePizzaData = createAsyncThunk(
@@ -43,7 +44,7 @@ export const createAddress = createAsyncThunk(
         const post_data_address = await CrudApi.add_address(data);
         return post_data_address.data
     }
-)
+);
 
 export const getCart = createAsyncThunk(
     "TokenSlice/cartGet",
@@ -51,6 +52,24 @@ export const getCart = createAsyncThunk(
         const get_cart_data = await CrudApi.view_cart(id);
         return get_cart_data.data
     }    
+);
+
+export const pizza_items = createAsyncThunk(
+    "TokenSlice/pizzaItem",
+    async ({id}) =>{
+        console.log("item",id);
+        const item_pizza = await CrudApi.view_pizza_items(id);
+        return item_pizza.data
+    }
+);
+
+export const token_validate = createAsyncThunk(
+    "TokenSlice/token",
+    async(data)=>{
+        console.log(data,"llllll");
+        const token_valid = await CrudApi.validate_acces_token(data);
+        return token_valid.data
+    }
 )
 
 const TokenSlice = createSlice({
@@ -127,6 +146,15 @@ const TokenSlice = createSlice({
                 state.loading = false
                 state.cart_data=action.payload
                 console.log("cart get");
+            })
+            .addCase(pizza_items.fulfilled, (state,action)=>{
+                state.pizza_data = action.payload
+                console.log(action.payload,"pizza");
+                state.loading=false
+                console.log("dbf");
+            })
+            .addCase(token_validate.fulfilled, state =>{
+                state.loading=false
             })
     }
 });
