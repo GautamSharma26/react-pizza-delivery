@@ -11,7 +11,8 @@ const initialState = {
     user:[],
     address:[],
     cart_data:[],
-    pizza_data:[]
+    pizza_data:[],
+    customer:[]
 }
 
 export const deletePizzaData = createAsyncThunk(
@@ -69,6 +70,14 @@ export const token_validate = createAsyncThunk(
         console.log(data,"llllll");
         const token_valid = await CrudApi.validate_acces_token(data);
         return token_valid.data
+    }
+);
+
+export const customer_data_get =createAsyncThunk(
+    "TokenSlice/customerdata",
+    async(data)=>{
+        const customer = await CrudApi.customer_data(data);
+        return customer.data;
     }
 )
 
@@ -156,6 +165,11 @@ const TokenSlice = createSlice({
             .addCase(token_validate.fulfilled, state =>{
                 state.loading=false
             })
+            .addCase(customer_data_get.fulfilled, (state,action) =>{
+                state.loading=false;
+                state.user=action.payload.user[0]
+            })
+            
     }
 });
 
