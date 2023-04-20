@@ -1,6 +1,9 @@
 import React, { Fragment } from 'react';
 import axios from "axios";
 import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { pizza_items } from '../Authentication/Slice/TokenSlice';
+import { useNavigate } from 'react-router-dom';
 // import { loadData } from '../LoadData';
 // import Example from './Modal';
 // import Button from 'react-bootstrap/Button';
@@ -14,7 +17,8 @@ import { useEffect, useState } from 'react';
  * 
  */
 const ShopView = () => {
-
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const [shopData, setShopData] = useState([])
 
@@ -49,6 +53,7 @@ const ShopView = () => {
                     <th scope="col">Shop Owner</th>
                     <th scope="col">Shop Name</th>
                     <th scope="col">Location</th>
+                    <th></th>
                 </tr>
             </thead>
             {shopData.map((datashop, index) => {
@@ -61,6 +66,7 @@ const ShopView = () => {
                                 <td>{datashop.owner}</td>
                                 <td>{datashop.name}</td>
                                 <td>{datashop.location}</td>
+                                <td><button onClick={e=>{console.log("view");navigate(`/user/pizza-items/${datashop.id}`) }}>View</button></td>
                                 {/* <td type='button' className='btn btn-danger mt-2 mb-1 ' onClick={(e) => ShopDelete(e, datashop)}>Delete</td> */}
                             </tr>
                         </tbody>

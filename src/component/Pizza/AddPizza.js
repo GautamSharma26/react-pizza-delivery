@@ -13,6 +13,9 @@ import OwnerViewPizza from '../ShopOwner/OwnerViewPizza';
 
 
 const AddPizza = () => {
+    const user = useSelector(state=>state.tokenData.user)
+    console.log(user["is_shop_owner"]);
+
     const [viewState, setViewState] = useState("false");
 
     const shop_data = useSelector(state => state.tokenData.shop);
@@ -32,39 +35,44 @@ const AddPizza = () => {
     const refreshtokenvalue = localStorage.getItem("refresh")
 
     const navigate = useNavigate();
+    useEffect(()=>{
+        user["is_shop_owner"]===false && navigate("/no-shop-owner")
+        
+    },[user])
 
-    useEffect(() => {
+    // useEffect(() => {
 
-        const generateAccessToken = () => {
-            axios.post(`http://127.0.0.1:8000/generate_access_token/`, {
-                "refresh": refreshtokenvalue
-            })
-                .then(res => {
-                    dispatch(storeToken({ "access": res.data.access, "refresh": refreshtokenvalue }))
-                    const x = FetchUserDetail(dispatch, navigate)
-                    return x
-                }).then(x => {
-                    if (localStorage.getItem("is_shop_owner") === "false") {
-                        navigate("/no-shop-owner");
-                    }
+    //     const generateAccessToken = () => {
+    //         axios.post(`http://127.0.0.1:8000/generate_access_token/`, {
+    //             "refresh": refreshtokenvalue
+    //         })
+    //             .then(res => {
+    //                 dispatch(storeToken({ "access": res.data.access, "refresh": refreshtokenvalue }))
+    //                 const x = FetchUserDetail(dispatch, navigate)
+    //                 return x
+    //             }).then(x => {
+    //                 if (localStorage.getItem("is_shop_owner") === "false") {
+    //                     console.log("ddddd");
+    //                     navigate("/no-shop-owner");
+    //                 }
 
-                })
+    //             })
 
-                .catch(err => {
-                    console.log(err)
-                    localStorage.clear()
-                    navigate("/loginredirect")
-                })
-        };
+    //             .catch(err => {
+    //                 console.log(err)
+    //                 localStorage.clear()
+    //                 navigate("/loginredirect")
+    //             })
+    //     };
 
-        generateAccessToken();
-        setImage();
-        setShop("");
-        setName("");
-        setPrice("");
-        setSize("");
-        // eslint-disable-next-line
-    }, [status]);
+    //     generateAccessToken();
+    //     setImage();
+    //     setShop("");
+    //     setName("");
+    //     setPrice("");
+    //     setSize("");
+    //     // eslint-disable-next-line
+    // }, [status]);
 
     const [image, setImage] = useState()
     const [shop, setShop] = useState('');

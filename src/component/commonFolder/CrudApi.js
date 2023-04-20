@@ -29,12 +29,23 @@ const view_cart = (id)=>{
   return http().get(`/product/cartpizza/${id}`)
 }
 
+const view_pizza_items = id =>{
+  console.log("pizzzzzzzzzzzzzz",id);
+  return http().get(`/product/product_view/${id}`);
+}
+
+const validate_acces_token = data =>{
+  return http().post(`/generate_access_token/`,data)
+}
+
 const CrudApi={
     remove,
     retrieve_customer,
     get_address,
     update_address,
     add_address,
-    view_cart
+    view_cart,
+    view_pizza_items,
+    validate_acces_token
 }
 export default CrudApi;

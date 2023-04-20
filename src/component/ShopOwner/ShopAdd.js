@@ -1,4 +1,4 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useState, useEffect } from "react";
@@ -7,6 +7,8 @@ import { useNavigate } from "react-router-dom";
 import { FetchUserDetail } from "../Authentication/UserDetailFetch";
 
 const ShopAdd = () => {
+    const user = useSelector(state=>state.tokenData.user)
+    console.log(user["is_shop_owner"]);
     // console.log(localStorage.getItem("refresh"),"lkl")
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -47,36 +49,43 @@ const ShopAdd = () => {
                 setStatus(err.statusText)
             })
     }
+    useEffect(()=>{
+        user["is_shop_owner"]===false && navigate("/no-shop-owner")
+        
+    },[user])
 
 
-    useEffect(() => {
-        const generateAccessToken = () => {
-            axios.post(`http://127.0.0.1:8000/generate_access_token/`, {
-                "refresh": refreshtokenvalue
-            })
-                .then(res => {
-                    dispatch(storeToken({ "access": res.data.access, "refresh": refreshtokenvalue }))
-                    const x = FetchUserDetail(dispatch, navigate)
-                    return x
-                }).then(x => {
-                    if (localStorage.getItem("is_shop_owner") === "false") {
-                        navigate("/no-shop-owner");
-                    }
+    // useEffect(() => {
+    //     const generateAccessToken = () => {
+    //         axios.post(`http://127.0.0.1:8000/generate_access_token/`, {
+    //             "refresh": refreshtokenvalue
+    //         })
+    //             .then(res => {
+    //                 dispatch(storeToken({ "access": res.data.access, "refresh": refreshtokenvalue }))
+    //                 console.log("shopadd");
+    //                 const x = FetchUserDetail(dispatch, navigate)
+    //                 return x
+    //             }).then(x => {
+    //                 if (localStorage.getItem("is_shop_owner") === "false") {
+    //                     // navigate("/no-shop-owner");
+    //                     console.log("no wo");
+    //                 }
+    //                 console.log("sh");
 
-                })
+    //             })
                 
-                .catch(err => {
-                    navigate("/loginredirect")
-                })
-        };
-        generateAccessToken();
-        setName("");
-        setLocation("");
-        // eslint-disable-next-line
-    }, [status]);
+    //             .catch(err => {
+    //                 console.log(err,"err");
+    //                 navigate("/no-shop-owner")
+    //             })
+    //     };
+    //     generateAccessToken();
+    //     setName("");
+    //     setLocation("");
+    //     // eslint-disable-next-line
+    // }, [status]);
     return (
         <>
-
             <div className="mask d-flex align-items-center mt-4">
                 <div className="container h-100">
                     <div className="row d-flex justify-content-center align-items-center h-100">
