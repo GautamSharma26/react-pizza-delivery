@@ -38,6 +38,9 @@ const validate_acces_token = data =>{
   return http().post(`/generate_access_token/`,data)
 }
 
+const customer_data = (data)=>{
+  return http().post(`/user-detail/`,data);
+}
 const CrudApi={
     remove,
     retrieve_customer,
@@ -46,6 +49,7 @@ const CrudApi={
     add_address,
     view_cart,
     view_pizza_items,
-    validate_acces_token
+    validate_acces_token,
+    customer_data
 }
 export default CrudApi;

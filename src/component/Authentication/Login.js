@@ -1,26 +1,27 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useDispatch,useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import logoLogin from "../../images/logologin.jpeg";
 import { Link, useNavigate } from "react-router-dom";
-import { storeToken, loginStatus } from "./Slice/TokenSlice";
+import { storeToken, loginStatus, customer_data_get } from "./Slice/TokenSlice";
 // import { loadData } from "../LoadData";
 // import { Link } from "react-router-dom";
 
 function UserLogin() {
-    
+
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const user = useSelector(state => state.tokenData.user)
+
     // console.log(user,"lk");
     // console.log(refreshtokenvalue,"r",accesstokenvalue)
-    // const accesstokenvalue = useSelector((state)=>state.tokenData.accesstoken)
+    const accesstokenvalue = useSelector((state) => state.tokenData.accesstoken)
     const [email, SetEmail] = useState('');
     const [password, setPassword] = useState('');
     const [textStatus, setTextStatus] = useState('')
     const postLogin = (e) => {
-        const value={statuslogin:"true"}
-        
+        const value = { statuslogin: "true" }
+
         e.preventDefault();
         axios.post("http://127.0.0.1:8000/login/", {
             email,
@@ -30,17 +31,34 @@ function UserLogin() {
                 dispatch(storeToken(res.data))
                 setTextStatus(res.statusText)
                 dispatch(loginStatus(value))
-                console.log(user);
-                navigate("/user")
+                console.log(accesstokenvalue, 'df');
+                dispatch(customer_data_get({ "access": res.data.access }))
+                    .then(res => {
+                        if (res.payload.user[0].is_shop_owner === true) {
+                            navigate("/shop-owner");
+                            console.log("oewjrjkere");
+
+                        }
+                        if (res.payload.user[0].is_delivery_boy === true) {
+                            console.log("owner");
+                            navigate("/user")
+                        }
+                        if (res.payload.user[0].is_delivery_boy === false && res.payload.user[0].is_shop_owner === false) {
+                            console.log("owner");
+                            navigate("/user")
+                        }            
+                    });
+                // navigate("/user")
             })
             .catch(err => {
                 setTextStatus(err.statusText)
             })
     }
     useEffect(() => {
-        console.log(user);
+        console.log(user, "effe");
         SetEmail('');
         setPassword('');
+        // eslint-disable-next-line
     }, [textStatus])
     return (
         <div className="container-fluid">
@@ -50,7 +68,7 @@ function UserLogin() {
                         <div className="col-8">
                             <div className="card shadow-2-strong card-login" style={{ borderRadius: "25px" }}></div>
                             <div className="card-body p-4 p-md-5">
-                                
+
                                 <form onSubmit={postLogin}>
                                     <div className="form-outline mb-4 text-center">
                                         <img src={logoLogin} alt="logo" className="text-center" />
