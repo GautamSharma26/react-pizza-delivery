@@ -1,7 +1,5 @@
 import axios from "axios";
 import { userDetail, shopDetail } from "./Slice/TokenSlice";
-// import { fetchCustomerDetail } from "./Slice/TokenSlice";
-import { useNavigate } from "react-router-dom";
 
 
 
@@ -17,10 +15,7 @@ export async function FetchUserDetail(dispatch) {
                 const y = shopUserDetail(res.data.user[0].id,dispatch,accesstokenvalue);
                 return y
             }
-         
-            // else{
-            //     dispatch(fetchCustomerDetail({id:res.data.user[0].id}))
-            // }
+       
             
         })
         .catch(err => { console.log(err, "detail") })
@@ -39,8 +34,3 @@ function shopUserDetail(pk,dispatch,accesstokenvalue){
         console.log(err,"err")
     })
 }
-
-
-// function UserDetail(){
-//     axios.get()
-// }

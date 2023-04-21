@@ -1,10 +1,8 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
 import axios from "axios";
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { storeToken } from '../Authentication/Slice/TokenSlice';
-import { FetchUserDetail } from '../Authentication/UserDetailFetch';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import OwnerViewPizza from '../ShopOwner/OwnerViewPizza';
@@ -13,7 +11,7 @@ import OwnerViewPizza from '../ShopOwner/OwnerViewPizza';
 
 
 const AddPizza = () => {
-    const user = useSelector(state=>state.tokenData.user)
+    const user = useSelector(state => state.tokenData.user)
     console.log(user["is_shop_owner"]);
 
     const [viewState, setViewState] = useState("false");
@@ -31,48 +29,13 @@ const AddPizza = () => {
     }
 
 
-    const dispatch = useDispatch();
-    const refreshtokenvalue = localStorage.getItem("refresh")
 
     const navigate = useNavigate();
-    useEffect(()=>{
-        user["is_shop_owner"]===false && navigate("/no-shop-owner")
-        
-    },[user])
+    useEffect(() => {
+        user["is_shop_owner"] === false && navigate("/no-shop-owner")
+        // eslint-disable-next-line
+    }, [user])
 
-    // useEffect(() => {
-
-    //     const generateAccessToken = () => {
-    //         axios.post(`http://127.0.0.1:8000/generate_access_token/`, {
-    //             "refresh": refreshtokenvalue
-    //         })
-    //             .then(res => {
-    //                 dispatch(storeToken({ "access": res.data.access, "refresh": refreshtokenvalue }))
-    //                 const x = FetchUserDetail(dispatch, navigate)
-    //                 return x
-    //             }).then(x => {
-    //                 if (localStorage.getItem("is_shop_owner") === "false") {
-    //                     console.log("ddddd");
-    //                     navigate("/no-shop-owner");
-    //                 }
-
-    //             })
-
-    //             .catch(err => {
-    //                 console.log(err)
-    //                 localStorage.clear()
-    //                 navigate("/loginredirect")
-    //             })
-    //     };
-
-    //     generateAccessToken();
-    //     setImage();
-    //     setShop("");
-    //     setName("");
-    //     setPrice("");
-    //     setSize("");
-    //     // eslint-disable-next-line
-    // }, [status]);
 
     const [image, setImage] = useState()
     const [shop, setShop] = useState('');
@@ -151,7 +114,7 @@ const AddPizza = () => {
         <div className="container-fluid">
 
             <div className='row mt-2 mb-3' style={{
-                background:""
+                background: ""
             }}>
 
                 {

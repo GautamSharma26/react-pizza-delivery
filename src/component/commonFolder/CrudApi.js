@@ -35,11 +35,15 @@ const view_pizza_items = id =>{
 }
 
 const validate_acces_token = data =>{
-  return http().post(`/generate_access_token/`,data)
+  return http().post(`/generate_access_token/`,data);
 }
 
 const customer_data = (data)=>{
   return http().post(`/user-detail/`,data);
+}
+
+const logout_user = (data)=>{
+  return http().post(`/logout/`,data);
 }
 const CrudApi={
     remove,
@@ -50,6 +54,7 @@ const CrudApi={
     view_cart,
     view_pizza_items,
     validate_acces_token,
-    customer_data
+    customer_data,
+    logout_user
 }
 export default CrudApi;
