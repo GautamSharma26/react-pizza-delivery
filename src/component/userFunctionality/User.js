@@ -14,6 +14,7 @@ const User = () => {
     const refreshtokenvalue = localStorage.getItem("refresh")
     useEffect(() => {
         dispatch(token_validate({ "refresh": refreshtokenvalue })).then(res => {
+            console.log(res);
 
             if (res.type === "TokenSlice/token/fulfilled") {
                 dispatch(storeToken({ "access": res.payload.access, "refresh": refreshtokenvalue }));
@@ -22,11 +23,12 @@ const User = () => {
                 console.log(customer_data, "customer");
             }
             if (res.type === "TokenSlice/token/rejected") {
-                navigate("/loginredirect")
+                localStorage.clear();
+                navigate("/loginredirect");
             }
         })
         // eslint-disable-next-line
-    }, [])
+    }, [refreshtokenvalue])
 
 
     return <div>

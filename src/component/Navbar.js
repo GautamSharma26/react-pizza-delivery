@@ -1,24 +1,35 @@
-import React, { useEffect } from "react"
-import { Link } from "react-router-dom";
+import React from "react"
+import { Link, useNavigate } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { useSelector, useDispatch } from "react-redux";
-import { loginStatus, customer_data_get } from "./Authentication/Slice/TokenSlice";
+import { loginStatus, logout_user_slice } from "./Authentication/Slice/TokenSlice";
+
 
 const Navbar = () => {
     const value = { statuslogin: "false" }
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const loginStatusData = useSelector((state) => state.tokenData.loginstatus);
     const handleClose = () => dispatch(loginStatus(value))
-    const accesstokenvalue = useSelector(state => state.tokenData.accesstoken)
     const user = useSelector(state => state.tokenData.user)
-    console.log(accesstokenvalue, "acces");
-
-    useEffect(() => {
-        dispatch(customer_data_get({ "access": accesstokenvalue }));
-        // eslint-disable-next-line
-    }, [])
-
+    const refreshtokenvalue = useSelector((state) => state.tokenData.refreshtoken)
+    
+    console.log(refreshtokenvalue);
+    function LogoutUser(e) {
+        if (refreshtokenvalue !== "") {
+            console.log("logout");
+            dispatch(logout_user_slice({ "refresh": refreshtokenvalue }))
+                .then(res => {
+                    console.log(res);
+                    if (res.type === "TokenSlice/logout/fulfilled") {
+                        localStorage.clear();
+                        window.location.reload(true);
+                        navigate("/loginredirect");
+                    }
+                })
+        }
+    }
 
     return (
         <>
@@ -59,12 +70,13 @@ const Navbar = () => {
                             <div className="dropdown-menu" aria-labelledby="navbarDropdown">
                                 {user['is_shop_owner'] === true && <Link to="/shop-owner/shopAdd" className="dropdown-item">Add Shop</Link>}
                                 {user['is_shop_owner'] === true && <Link to="/shop-owner/add-pizza" className="dropdown-item">Add Pizza</Link>}
-                                <Link to="/shop-list" className="dropdown-item">View All Shop</Link>
-                                <Link to="/user" className="dropdown-item">Customer</Link>
-                                <Link to="/user/cart" className="dropdown-item">Cart</Link>
+                                <Link to="/user/shop-list" className="dropdown-item">View All Shop</Link>
+                                {user['is_shop_owner'] === false && <Link to="/user" className="dropdown-item">Customer</Link>}
+                                {user['is_shop_owner'] === false && <Link to="/user/cart" className="dropdown-item">Cart</Link>}
                                 <div className="dropdown-divider"></div>
-                                <Link to="/login" className="dropdown-item">Login</Link>
-                                <Link to="/registration" className="dropdown-item">Registration</Link>
+                                {!refreshtokenvalue && <Link to="/login" className="dropdown-item">Login</Link>}
+                                {!user && <Link to="/registration" className="dropdown-item">Registration</Link>}
+                                {refreshtokenvalue!==""&&<button className="dropdown-item" onClick={e => {LogoutUser(e) }}>Logout</button>}
                             </div>
                         </li>
                     </ul>
@@ -72,7 +84,6 @@ const Navbar = () => {
                 </div>
             </nav>
         </>
-
 
     )
 

@@ -29,7 +29,7 @@ function App() {
           <Route path="/password_reset/confirm/" element={<ConfirmPassword />} />
           
           <Route path="/loginredirect" element={<LoginRedirect />} />
-          <Route path='/shop-list' element={<ShopView />} />
+          
           <Route path='/no-shop-owner' element={<NoShopOwner />} />
           <Route path='*' element={<NoPage/>}/>
         </Route>
@@ -43,6 +43,7 @@ function App() {
           <Route path='show-address' element={<ShowAddress/>}/>
           <Route path='cart' element={<CartItem/>}/>
           <Route path='pizza-items/:id' element={<PizzaItemView/>}/>
+          <Route path='shop-list' element={<ShopView />} />
         </Route>
         
       </Routes>

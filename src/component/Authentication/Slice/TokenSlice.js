@@ -3,7 +3,7 @@ import CrudApi from "../../commonFolder/CrudApi";
 
 const initialState = {
     refreshtoken: "",
-    accesstoken: "jwerfufueygfuefesfefi",
+    accesstoken: "",
     loginstatus: "false",
     shop: [],
     shop_pizza: [],
@@ -14,6 +14,8 @@ const initialState = {
     pizza_data:[],
     customer:[]
 }
+
+
 
 export const deletePizzaData = createAsyncThunk(
     "TokenSlice/delete",
@@ -78,6 +80,14 @@ export const customer_data_get =createAsyncThunk(
     async(data)=>{
         const customer = await CrudApi.customer_data(data);
         return customer.data;
+    }
+);
+
+export const logout_user_slice = createAsyncThunk(
+    "TokenSlice/logout",
+    async(data)=>{
+        const data_logout = await CrudApi.logout_user(data);
+        return data_logout.data;
     }
 )
 
@@ -164,10 +174,18 @@ const TokenSlice = createSlice({
             })
             .addCase(token_validate.fulfilled, state =>{
                 state.loading=false
+                console.log("to");
             })
             .addCase(customer_data_get.fulfilled, (state,action) =>{
                 state.loading=false;
-                state.user=action.payload.user[0]
+                localStorage.setItem("user",JSON.stringify(action.payload.user[0]))
+                state.user=JSON.parse(localStorage.getItem("user"))
+                console.log("as");
+            })
+            .addCase(logout_user_slice.fulfilled, (state,action)=>{
+                state.loading=false;
+                console.log(action.payload);
+                
             })
             
     }

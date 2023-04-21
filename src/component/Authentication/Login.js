@@ -4,8 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import logoLogin from "../../images/logologin.jpeg";
 import { Link, useNavigate } from "react-router-dom";
 import { storeToken, loginStatus, customer_data_get } from "./Slice/TokenSlice";
-// import { loadData } from "../LoadData";
-// import { Link } from "react-router-dom";
+
 
 function UserLogin() {
 
@@ -46,7 +45,7 @@ function UserLogin() {
                         if (res.payload.user[0].is_delivery_boy === false && res.payload.user[0].is_shop_owner === false) {
                             console.log("owner");
                             navigate("/user")
-                        }            
+                        }
                     });
                 // navigate("/user")
             })
@@ -54,8 +53,14 @@ function UserLogin() {
                 setTextStatus(err.statusText)
             })
     }
+
     useEffect(() => {
         console.log(user, "effe");
+        // if (!isFirstLoad) {
+        //     window.location.reload();
+        // } else {
+        //     setIsFirstLoad(false)
+        // }
         SetEmail('');
         setPassword('');
         // eslint-disable-next-line
