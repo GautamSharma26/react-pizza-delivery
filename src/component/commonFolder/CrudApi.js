@@ -45,6 +45,19 @@ const customer_data = (data)=>{
 const logout_user = (data)=>{
   return http().post(`/logout/`,data);
 }
+
+const cart_item_add = id=>{
+  return http().post(`/product/cart/`,id);
+}
+
+const cart_item_del = id=>{
+  return http().delete(`/product/cart-item-del/${id}/`);
+}
+
+const cart_item_update = (id,data)=>{
+  return http().patch(`/product/cart-item-del/${id}/`,data);
+}
+
 const CrudApi={
     remove,
     retrieve_customer,
@@ -55,6 +68,9 @@ const CrudApi={
     view_pizza_items,
     validate_acces_token,
     customer_data,
-    logout_user
+    logout_user,
+    cart_item_add,
+    cart_item_del,
+    cart_item_update
 }
 export default CrudApi;

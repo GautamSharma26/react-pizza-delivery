@@ -33,6 +33,7 @@ function UserLogin() {
                 console.log(accesstokenvalue, 'df');
                 dispatch(customer_data_get({ "access": res.data.access }))
                     .then(res => {
+                        console.log(res);
                         if (res.payload.user[0].is_shop_owner === true) {
                             navigate("/shop-owner");
                             console.log("oewjrjkere");

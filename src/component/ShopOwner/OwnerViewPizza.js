@@ -1,10 +1,8 @@
 import React, { Fragment } from 'react';
-import { useState, useEffect } from 'react';
-import AddPizza from '../Pizza/AddPizza';
+import { useEffect } from 'react';
 import axios from 'axios'
-import { shopDataFn, deletePizza } from '../Authentication/Slice/TokenSlice';
+import { shopDataFn} from '../Authentication/Slice/TokenSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import NoShopOwner from './NoShopOwner';
 import { deletePizzaData } from '../Authentication/Slice/TokenSlice';
 
 const OwnerViewPizza = (props) => {

@@ -10,7 +10,6 @@ const User = () => {
     const dispatch = useDispatch();
     const customer_data = useSelector(state => state.tokenData.user)
 
-    // dispatch(storeToken({ "access": res.data.access, "refresh": refreshtokenvalue }))
     const refreshtokenvalue = localStorage.getItem("refresh")
     useEffect(() => {
         dispatch(token_validate({ "refresh": refreshtokenvalue })).then(res => {
@@ -24,6 +23,7 @@ const User = () => {
             }
             if (res.type === "TokenSlice/token/rejected") {
                 localStorage.clear();
+                // window.location.reload(true);
                 navigate("/loginredirect");
             }
         })
