@@ -66,10 +66,17 @@ export const pizza_items = createAsyncThunk(
     }
 );
 
+export const items_add_cart = createAsyncThunk(
+    "TokenSlice/pizzaCartItems",
+    async(id)=>{
+        const cart_items = await CrudApi.cart_item_add(id);
+        return cart_items.data
+    }
+);
+
 export const token_validate = createAsyncThunk(
     "TokenSlice/token",
     async(data)=>{
-        console.log(data,"llllll");
         const token_valid = await CrudApi.validate_acces_token(data);
         return token_valid.data
     }
@@ -88,6 +95,22 @@ export const logout_user_slice = createAsyncThunk(
     async(data)=>{
         const data_logout = await CrudApi.logout_user(data);
         return data_logout.data;
+    }
+);
+
+export const delete_cart_item = createAsyncThunk(
+    "TokenSlice/DelItemCart",
+    async({id})=>{
+        const item_cart = await CrudApi.cart_item_del(id);
+        return item_cart.data; 
+    }
+);
+
+export const item_update_cart = createAsyncThunk(
+    "TokenSlice/ItemUpdateQunatity",
+    async({id,data})=>{
+        const item_update = await CrudApi.cart_item_update(id,data);
+        return item_update.data
     }
 )
 
@@ -186,6 +209,10 @@ const TokenSlice = createSlice({
                 state.loading=false;
                 console.log(action.payload);
                 
+            })
+            .addCase(items_add_cart.fulfilled, state=>{
+                state.loading = false;
+                console.log(state);
             })
             
     }

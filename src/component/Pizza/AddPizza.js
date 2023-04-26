@@ -72,7 +72,12 @@ const AddPizza = () => {
             }
         )
             .then(res => {
-                setStatus("200")
+                setStatus("200");
+                setShop("");
+                setPrice("");
+                setName("");
+                setSize("");
+                setCard({ status: "false", card_id: "" });
                 handleShow()
             })
             .catch(err => {
@@ -112,11 +117,9 @@ const AddPizza = () => {
         </Modal></>}
 
         <div className="container-fluid">
-
             <div className='row mt-2 mb-3' style={{
                 background: ""
             }}>
-
                 {
                     shop_data.length !== 0 ?
                         <>
@@ -151,7 +154,6 @@ const AddPizza = () => {
                                     <div className="card-body p-4 p-md-5">
                                         <h3 className="mb-4 pb-2 pb-md-0 mb-md-5 text-center">ADD PIZZA TO YOUR SHOP</h3>
                                         <form onSubmit={addPizzaData}>
-
                                             <div className="row">
                                                 <div className="col-md-6 mb-4">
 
@@ -159,7 +161,6 @@ const AddPizza = () => {
                                                         <input type="text" id="size" className="form-control form-control-lg" value={size} onChange={e => { setSize(e.target.value) }} />
                                                         <label className="form-label" htmlFor="size">Pizza Size</label>
                                                     </div>
-
                                                 </div>
                                                 <div className="col-md-6 mb-4">
 
@@ -188,31 +189,20 @@ const AddPizza = () => {
                                                     </div>
                                                 </div>
                                             </div>
-
-
-
                                             <div className="mt-4 pt-2 text-center">
                                                 {card.status === "true" ? <input className="btn btn-primary btn-lg" type="submit" value="Submit" /> : <p>Please Select One Shop First</p>}
                                             </div>
-
                                         </form>
-
-
                                     </div>
-
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
             }
-
         </div>
-
     </div>
 };
-
 
 // #endregion
 

@@ -20,6 +20,7 @@ const Frontend = () => {
             }
             if (res.type === "TokenSlice/token/rejected") {
                 localStorage.clear();
+                // window.location.reload(true);
                 navigate("/loginredirect");
             }
         })

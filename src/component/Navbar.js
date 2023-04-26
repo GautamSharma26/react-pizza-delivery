@@ -14,7 +14,7 @@ const Navbar = () => {
     const handleClose = () => dispatch(loginStatus(value))
     const user = useSelector(state => state.tokenData.user)
     const refreshtokenvalue = useSelector((state) => state.tokenData.refreshtoken)
-    
+
     console.log(refreshtokenvalue);
     function LogoutUser(e) {
         if (refreshtokenvalue !== "") {
@@ -76,11 +76,13 @@ const Navbar = () => {
                                 <div className="dropdown-divider"></div>
                                 {!refreshtokenvalue && <Link to="/login" className="dropdown-item">Login</Link>}
                                 {!user && <Link to="/registration" className="dropdown-item">Registration</Link>}
-                                {refreshtokenvalue!==""&&<button className="dropdown-item" onClick={e => {LogoutUser(e) }}>Logout</button>}
+                                {refreshtokenvalue !== "" && <button className="dropdown-item" onClick={e => { LogoutUser(e) }}>Logout</button>}
                             </div>
                         </li>
                     </ul>
-
+                    <form class="d-flex">
+                       <Link to="/user/cart"> <i className="fa badge" style={{ fontSize: "24px" }} value={user['total_items']} >&#xf07a;</i></Link>
+                    </form>
                 </div>
             </nav>
         </>

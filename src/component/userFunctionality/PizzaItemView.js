@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useParams, useNavigate } from 'react-router-dom'
-import { pizza_items } from '../Authentication/Slice/TokenSlice'
+import { pizza_items, items_add_cart } from '../Authentication/Slice/TokenSlice'
 import { Fragment } from 'react'
 
 const PizzaItemView = () => {
@@ -15,7 +15,13 @@ const PizzaItemView = () => {
         // eslint-disable-next-line
     }, [])
 
-console.log(pizza_data);
+    function handleOnClick(e, id) {
+        e.preventDefault();
+        dispatch(items_add_cart({ pizza: id, quantity: 1 }))
+            .then(res => { console.log(res); })
+    }
+
+    console.log(pizza_data);
     // console.log(pizza_data.length, "l");
     return (
         <div className='container-fluid'>
@@ -30,6 +36,7 @@ console.log(pizza_data);
                                     <th scope="col">Pizza Name</th>
                                     <th scope="col">Pizza Price</th>
                                     <th scope="col">Size</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             {pizza_data.map((datashop, index) => {
@@ -42,6 +49,7 @@ console.log(pizza_data);
                                                 <td>{datashop.name}</td>
                                                 <td>{datashop.price}</td>
                                                 <td>{datashop.size}</td>
+                                                <td><button onClick={e => { console.log("clicked"); handleOnClick(e, datashop.id); }}>Add to Cart</button></td>
                                             </tr>
                                         </tbody>
                                     </Fragment>
