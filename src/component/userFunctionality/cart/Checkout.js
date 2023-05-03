@@ -1,6 +1,26 @@
-import React from 'react'
+import React, { useState, useEffect, Fragment } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+import { getCart } from '../../Authentication/Slice/TokenSlice';
+import { Link } from 'react-router-dom';
 
 const Checkout = () => {
+    const [cartData, setCartData] = useState();
+    const dispatch = useDispatch();
+    const user = useSelector(state => state.tokenData.user)
+    useEffect(() => {
+        function handleOnDispatch() {
+            user.length !== 0 &&
+                dispatch(getCart({ id: user['id'] }))
+                    .then(res => {
+                        setCartData(res.payload[0])
+                    })
+                    .catch(err => { console.log("err", err) })
+        };
+        handleOnDispatch();
+
+        // eslint-disable-next-line
+    }, [user])
+
     return (
         <section class="h-100 h-custom" style={{ backgroundColor: "#eee" }}>
             <div class="container h-100 py-5">
@@ -11,85 +31,36 @@ const Checkout = () => {
                                 <div class="row">
                                     <div class="col-lg-6 px-5 py-4">
                                         <h3 class="mb-5 pt-2 text-center fw-bold text-uppercase">Your products</h3>
-                                        <div class="d-flex align-items-center mb-5">
-                                            <div class="flex-shrink-0">
-                                                <img src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/13.webp"
-                                                    class="img-fluid" style={{ width: "150px" }} alt="Generic placeholder" />
-                                            </div>
-                                            <div class="flex-grow-1 ms-3">
-                                                <a href="#!" class="float-end text-black"><i class="fas fa-times"></i></a>
-                                                <h5 class="text-primary">Samsung Galaxy M11 64GB</h5>
-                                                <h6 style={{ color: "#9e9e9e" }}>Color: white</h6>
-                                                <div class="d-flex align-items-center">
-                                                    <p class="fw-bold mb-0 me-5 pe-3">799$</p>
-                                                    <div class="def-number-input number-input safari_only">
-                                                        <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()"
-                                                            class="minus"></button>
-                                                        <input class="quantity fw-bold text-black" min="0" name="quantity" value="1"
-                                                            type="number" />
-                                                        <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()"
-                                                            class="plus"></button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        {cartData ? cartData.data_pizza.map((cartpizza, index) => {
+                                            return (
 
-                                        <div class="d-flex align-items-center mb-5">
-                                            <div class="flex-shrink-0">
-                                                <img src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/6.webp"
-                                                    class="img-fluid" style={{ width: "150px" }} alt="Generic placeholder" />
-                                            </div>
-                                            <div class="flex-grow-1 ms-3">
-                                                <a href="#!" class="float-end text-black"><i class="fas fa-times"></i></a>
-                                                <h5 class="text-primary">Headphones Bose 35 II</h5>
-                                                <h6 style={{ color: "#9e9e9e" }}>Color: Red</h6>
-                                                <div class="d-flex align-items-center">
-                                                    <p class="fw-bold mb-0 me-5 pe-3">239$</p>
-                                                    <div class="def-number-input number-input safari_only">
-                                                        <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()"
-                                                            class="minus"></button>
-                                                        <input class="quantity fw-bold text-black" min="0" name="quantity" value="1"
-                                                            type="number" />
-                                                        <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()"
-                                                            class="plus"></button>
+                                                <Fragment key={index}>
+                                                    <div className="d-flex align-items-center mb-5">
+                                                        <div class="flex-shrink-0">
+                                                            <img src={cartpizza.pizza_img}
+                                                                className="img-fluid" style={{ width: "150px" }} alt="Generic placeholder" />
+                                                        </div>
+                                                        <div class="flex-grow-1 mx-3 ">
+                                                            <h5 class="text-primary">{cartpizza.pizza}</h5>
+                                                            <h6 style={{ color: "#9e9e9e" }}>Size: {cartpizza.pizza_data['size']}</h6>
+                                                            <p class="fw-bold mb-0 me-5 pe-3">Price: {cartpizza.pizza_data['price']}/Pc</p>
+                                                            <p class="fw-bold mb-0 me-5 pe-3">Quantity: {cartpizza.quantity}</p>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="d-flex align-items-center mb-5">
-                                            <div class="flex-shrink-0">
-                                                <img src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/1.webp"
-                                                    class="img-fluid" style={{ width: "150px" }} alt="Generic placeholder" />
-                                            </div>
-                                            <div class="flex-grow-1 ms-3">
-                                                <a href="#!" class="float-end text-black"><i class="fas fa-times"></i></a>
-                                                <h5 class="text-primary">iPad 9.7 6-gen WiFi 32GB</h5>
-                                                <h6 style={{ color: "#9e9e9e" }}>Color: rose pink</h6>
-                                                <div class="d-flex align-items-center">
-                                                    <p class="fw-bold mb-0 me-5 pe-3">659$</p>
-                                                    <div class="def-number-input number-input safari_only">
-                                                        <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()"
-                                                            class="minus"></button>
-                                                        <input class="quantity fw-bold text-black" min="0" name="quantity" value="2"
-                                                            type="number" />
-                                                        <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()"
-                                                            class="plus"></button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
+                                                </Fragment>)
+                                        }) : <>No Item in Cart</>
+                                        }
                                         <hr class="mb-4" style={{ height: "2px", backgroundColor: "#1266f1", opacity: "1" }} />
 
-                                        <div class="d-flex justify-content-between px-x">
+                                        {/* <div class="d-flex justify-content-between px-x">
                                             <p class="fw-bold">Discount:</p>
                                             <p class="fw-bold">95$</p>
-                                        </div>
-                                        <div class="d-flex justify-content-between p-2 mb-2" style={{ backgroundColor: "#e1f5fe" }}>
-                                            <h5 class="fw-bold mb-0">Total:</h5>
-                                            <h5 class="fw-bold mb-0">2261$</h5>
-                                        </div>
+                                        </div> */}
+                                        {cartData &&
+                                            <div class="d-flex justify-content-between p-2 mb-2" style={{ backgroundColor: "#e1f5fe" }}>
+                                                <h5 class="fw-bold mb-0">Total:</h5>
+                                                <h5 class="fw-bold mb-0">{cartData.total_amount}</h5>
+                                            </div>}
 
                                     </div>
                                     <div class="col-lg-6 px-5 py-4">
@@ -133,7 +104,7 @@ const Checkout = () => {
                                             <button type="button" class="btn btn-primary btn-block btn-lg">Buy now</button>
 
                                             <h5 class="fw-bold mb-5" style={{ position: "absolute", bottom: "0" }}>
-                                                <a href="#!"><i class="fas fa-angle-left me-2"></i>Back to shopping</a>
+                                                <Link to="/user/shop-list-user">Back to shopping</Link>
                                             </h5>
 
                                         </form>

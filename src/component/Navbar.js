@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { Link, useNavigate } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
@@ -13,12 +13,17 @@ const Navbar = () => {
     const loginStatusData = useSelector((state) => state.tokenData.loginstatus);
     const handleClose = () => dispatch(loginStatus(value))
     const user = useSelector(state => state.tokenData.user)
-    const refreshtokenvalue = useSelector((state) => state.tokenData.refreshtoken)
+    // const user = JSON.parse(localStorage.getItem("user"))
+    const refreshtokenvalue = localStorage.getItem("refresh")
+    console.log(refreshtokenvalue===null);
+    useEffect(()=>{
+console.log("djfsdus");
+    },[])
 
     console.log(refreshtokenvalue);
     function LogoutUser(e) {
         if (refreshtokenvalue !== "") {
-            console.log("logout");
+            console.log("logout",refreshtokenvalue);
             dispatch(logout_user_slice({ "refresh": refreshtokenvalue }))
                 .then(res => {
                     console.log(res);
@@ -30,6 +35,7 @@ const Navbar = () => {
                 })
         }
     }
+    console.log(user);
 
     return (
         <>
@@ -70,19 +76,20 @@ const Navbar = () => {
                             <div className="dropdown-menu" aria-labelledby="navbarDropdown">
                                 {user['is_shop_owner'] === true && <Link to="/shop-owner/shopAdd" className="dropdown-item">Add Shop</Link>}
                                 {user['is_shop_owner'] === true && <Link to="/shop-owner/add-pizza" className="dropdown-item">Add Pizza</Link>}
-                                <Link to="/user/shop-list" className="dropdown-item">View All Shop</Link>
+                                <Link to="/shop-list" className="dropdown-item">View All Shop</Link>
                                 {user['is_shop_owner'] === false && <Link to="/user" className="dropdown-item">Customer</Link>}
                                 {user['is_shop_owner'] === false && <Link to="/user/cart" className="dropdown-item">Cart</Link>}
                                 <div className="dropdown-divider"></div>
                                 {!refreshtokenvalue && <Link to="/login" className="dropdown-item">Login</Link>}
                                 {!user && <Link to="/registration" className="dropdown-item">Registration</Link>}
-                                {refreshtokenvalue !== "" && <button className="dropdown-item" onClick={e => { LogoutUser(e) }}>Logout</button>}
+                                {refreshtokenvalue && <button className="dropdown-item" onClick={e => { LogoutUser(e) }}>Logout</button>}
                             </div>
                         </li>
                     </ul>
+                    {refreshtokenvalue&&
                     <form class="d-flex">
-                       <Link to="/user/cart"> <i className="fa badge" style={{ fontSize: "24px" }} value={user['total_items']} >&#xf07a;</i></Link>
-                    </form>
+                        <Link to="/user/cart"> <i className="fa badge" style={{ fontSize: "24px" }} value={user['total_items']} >&#xf07a;</i></Link>
+                    </form>}
                 </div>
             </nav>
         </>

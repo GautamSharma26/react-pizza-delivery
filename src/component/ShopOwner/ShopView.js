@@ -10,6 +10,7 @@ const ShopView = () => {
     const navigate = useNavigate();
 
     const [shopData, setShopData] = useState([])
+    const token = localStorage.getItem("access")
 
     useEffect(() => {
 
@@ -39,7 +40,10 @@ const ShopView = () => {
                                 <td>{datashop.owner}</td>
                                 <td>{datashop.name}</td>
                                 <td>{datashop.location}</td>
-                                <td><button onClick={e => { console.log("view"); navigate(`/user/pizza-items/${datashop.id}`) }}>View</button></td>
+                                {token?
+                                <td><button onClick={e => { console.log("view"); navigate(`/user/shop-list-user/pizza-items/${datashop.id}`) }}>View</button></td>:
+                                <td><button onClick={e => { console.log("view"); navigate(`/shop-list/${datashop.id}/pizza/`) }}>View</button></td>
+                                }
                             </tr>
                         </tbody>
                     </Fragment>

@@ -1,6 +1,6 @@
 import UserLogin from './component/Authentication/Login';
 // import Navbar from './component/Navbar';
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route} from 'react-router-dom';
 import Registration from './component/Authentication/Registration';
 import ResetPassword from './component/Authentication/ResetPassword';
 import ConfirmPassword from './component/Authentication/ConfirmPassword';
@@ -17,35 +17,40 @@ import Sidebar from './component/userFunctionality/Sidebar';
 import CartItem from './component/userFunctionality/cart/CartItem';
 import ShowAddress from './component/userFunctionality/ShowAddress';
 import PizzaItemView from './component/userFunctionality/PizzaItemView';
+import PizzaViewCommon from './component/commonFolder/PizzaViewCommon';
+import Checkout from './component/userFunctionality/cart/Checkout';
+
 
 function App() {
   return (
     <>
       <Routes>
         <Route path='/' element={<Frontend />}>
-          <Route path="login" element={<UserLogin />} />
+          <Route path="/login" element={<UserLogin />} />
           <Route path="/registration" element={<Registration />} />
           <Route path="/resetpassword" element={<ResetPassword />} />
-          <Route path="/password_reset/confirm/" element={<ConfirmPassword />} />
-          
+          <Route path="/password_reset/confirm/" element={<ConfirmPassword />}/>
           <Route path="/loginredirect" element={<LoginRedirect />} />
-          
           <Route path='/no-shop-owner' element={<NoShopOwner />} />
-          <Route path='*' element={<NoPage/>}/>
+          <Route path='/shop-list' element={<ShopView />} />
+          <Route path='/shop-list/:id/pizza/' element={<PizzaViewCommon/>}/>
+          <Route path='*' element={<NoPage />} />
         </Route>
-        <Route path='shop-owner' element={<ShopOwner/>}>
-          <Route path="add-pizza" element={<AddPizza/>}/>
+        <Route path='shop-owner' element={<ShopOwner />}>
+          <Route path="add-pizza" element={<AddPizza />} />
           <Route path="shopAdd" element={<ShopAdd />} />
-          <Route path='*' element={<NoPage/>}/>
+          <Route path='*' element={<NoPage />} />
         </Route>
-        <Route path='user' element={<User/>}>
-          <Route index  element={<Sidebar/>}/>
-          <Route path='show-address' element={<ShowAddress/>}/>
-          <Route path='cart' element={<CartItem/>}/>
-          <Route path='pizza-items/:id' element={<PizzaItemView/>}/>
-          <Route path='shop-list' element={<ShopView />} />
+        <Route path='user' element={<User />}>
+          <Route index element={<Sidebar />} />
+          <Route path='show-address' element={<ShowAddress />} />
+          <Route path='cart' element={<CartItem />} />
+          <Route path='shop-list-user' element={<ShopView />} />
+          <Route path='shop-list-user/pizza-items/:id' element={<PizzaItemView />} />
+          <Route path='checkout' element={<Checkout/>}/>
+          <Route path='*' element={<NoPage />} />
         </Route>
-        
+
       </Routes>
     </>
   );

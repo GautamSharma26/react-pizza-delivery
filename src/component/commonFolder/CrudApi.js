@@ -1,7 +1,8 @@
 // import CommonApi from "./CommonApi"
 import CreateAxiosInstance from "./CommonApi"
+import NonauthApi from "./NonauthApi";
 const http = CreateAxiosInstance;
-console.log(http,"http")
+const api_http = NonauthApi;
 
 const remove = id => {
  
@@ -58,6 +59,13 @@ const cart_item_update = (id,data)=>{
   return http().patch(`/product/cart-item-del/${id}/`,data);
 }
 
+const shop_data_retrieve = id =>{
+  return http().get(`/product/shop/${id}/`);
+}
+
+const pizza_data = id =>{
+  return api_http().get(`product/pizza-data/${id}/`);
+}
 const CrudApi={
     remove,
     retrieve_customer,
@@ -71,6 +79,8 @@ const CrudApi={
     logout_user,
     cart_item_add,
     cart_item_del,
-    cart_item_update
+    cart_item_update,
+    shop_data_retrieve,
+    pizza_data
 }
 export default CrudApi;

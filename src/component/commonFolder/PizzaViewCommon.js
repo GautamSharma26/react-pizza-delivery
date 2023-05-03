@@ -1,45 +1,19 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useParams, useNavigate } from 'react-router-dom'
-import { pizza_items, items_add_cart } from '../Authentication/Slice/TokenSlice'
-import { Fragment } from 'react'
-import swal from 'sweetalert';
+import { data_pizza } from '../Authentication/Slice/TokenSlice';
+import { Fragment } from 'react';
 
-const PizzaItemView = () => {
+const PizzaViewCommon = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     let { id } = useParams();
+
     const pizza_data = useSelector(state => state.tokenData.pizza_data.data)
     useEffect(() => {
-        dispatch(pizza_items({ id: id }))
+        dispatch(data_pizza({ id: id }))
         // eslint-disable-next-line
     }, [])
-    function JSalert() {
-
-        swal("Congrats!", "Your account is created!", "success");
-
-    }
-
-    function JSalertWarn() {
-
-        swal( "You have already added pizza from another SHOP!");
-
-    }
-
-    function handleOnClick(e, id) {
-        e.preventDefault();
-        dispatch(items_add_cart({ pizza: id, quantity: 1 }))
-            .then(res => {
-                console.log(res);
-                if (res.type === "TokenSlice/pizzaCartItems/fulfilled") {
-                    JSalert();
-                }
-                if (res.type === "TokenSlice/pizzaCartItems/rejected" && res.error.message === "Request failed with status code 406") {
-                    JSalertWarn();
-                }
-
-            })
-    }
 
     console.log(pizza_data);
     // console.log(pizza_data.length, "l");
@@ -56,7 +30,6 @@ const PizzaItemView = () => {
                                     <th scope="col">Pizza Name</th>
                                     <th scope="col">Pizza Price</th>
                                     <th scope="col">Size</th>
-                                    <th></th>
                                 </tr>
                             </thead>
                             {pizza_data.map((datashop, index) => {
@@ -69,7 +42,6 @@ const PizzaItemView = () => {
                                                 <td>{datashop.name}</td>
                                                 <td>{datashop.price}</td>
                                                 <td>{datashop.size}</td>
-                                                <td><button onClick={e => { console.log("clicked"); handleOnClick(e, datashop.id); }}>Add to Cart</button></td>
                                             </tr>
                                         </tbody>
                                     </Fragment>
@@ -80,7 +52,7 @@ const PizzaItemView = () => {
 
 
                     }
-                    <button className='btn-primary' onClick={e => navigate("/user/shop-list-user")}>Back</button>
+                    <button className='btn-primary' onClick={e => navigate("/shop-list")}>Back</button>
                 </div>
 
             </div>
@@ -89,4 +61,4 @@ const PizzaItemView = () => {
     )
 }
 
-export default PizzaItemView
+export default PizzaViewCommon

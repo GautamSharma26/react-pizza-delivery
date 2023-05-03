@@ -85,6 +85,7 @@ export const token_validate = createAsyncThunk(
 export const customer_data_get =createAsyncThunk(
     "TokenSlice/customerdata",
     async(data)=>{
+        console.log("useeeeeeeeeee");
         const customer = await CrudApi.customer_data(data);
         return customer.data;
     }
@@ -111,6 +112,22 @@ export const item_update_cart = createAsyncThunk(
     async({id,data})=>{
         const item_update = await CrudApi.cart_item_update(id,data);
         return item_update.data
+    }
+)
+
+export const shop_retrieve_data = createAsyncThunk(
+    "TokenSlice/shopdata",
+    async({id})=>{
+        const data_retrieve = await CrudApi.shop_data_retrieve(id);
+        return data_retrieve.data
+    }
+)
+
+export const data_pizza = createAsyncThunk(
+    "TokenSlice/pizzaItemData",
+    async({id})=>{
+        const pizza_item_retrieve = await CrudApi.pizza_data(id);
+        return pizza_item_retrieve.data
     }
 )
 
@@ -148,6 +165,10 @@ const TokenSlice = createSlice({
         deletePizza: (state, action) => {
             console.log("state", state, "action", action)
         },
+        // pizza_details:(state,action)=>{
+        //     console.log(action.payload);
+        //     state.pizza_data = action.payload
+        // }
     },
     extraReducers: builder => {
         builder
@@ -195,9 +216,10 @@ const TokenSlice = createSlice({
                 state.loading=false
                 console.log("dbf");
             })
-            .addCase(token_validate.fulfilled, state =>{
-                state.loading=false
-                console.log("to");
+            .addCase(token_validate.fulfilled, (state,action) =>{
+                state.loading=false;
+                localStorage.setItem("access", action.payload.access);
+                console.log("to",action.payload);
             })
             .addCase(customer_data_get.fulfilled, (state,action) =>{
                 state.loading=false;
@@ -214,9 +236,17 @@ const TokenSlice = createSlice({
                 state.loading = false;
                 console.log(state);
             })
+            .addCase(shop_retrieve_data.fulfilled, (state,action)=>{
+                state.loading=false;
+                state.shop = action.payload.message
+            })
+            .addCase(data_pizza.fulfilled, (state,action)=>{
+                state.loading = false;
+                state.pizza_data = action.payload
+            })
             
     }
 });
 
-export const { storeToken, userDetail, shopDetail, loginStatus, shopDataFn, ShopDataRetrieve, deletePizza } = TokenSlice.actions;
+export const { storeToken, userDetail, shopDetail, loginStatus, shopDataFn, ShopDataRetrieve, deletePizza} = TokenSlice.actions;
 export default TokenSlice;
