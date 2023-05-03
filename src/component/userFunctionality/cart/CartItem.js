@@ -5,9 +5,11 @@ import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
+import { useNavigate } from 'react-router-dom';
 
 
 const CartItem = () => {
+  const navigate = useNavigate();
   const [cartData, setCartData] = useState();
   const [statusdelete, setDeleteStatus] = useState("false");
   const [statusupdate, setUpdateAdd] = useState("false")
@@ -48,6 +50,8 @@ const CartItem = () => {
       .then(res => {
         if (res.type === "TokenSlice/ItemUpdateQunatity/fulfilled") {
           setUpdateAdd("true");
+          navigate("/user/cart")
+          
           // window.location.reload(true);
         }
       })
@@ -139,7 +143,7 @@ const CartItem = () => {
             </div>
               <div className="card">
                 <div className="card-body">
-                  <button type="button" className="btn btn-warning btn-block btn-lg">Proceed to Checkout</button>
+                  <button type="button" className="btn btn-warning btn-block btn-lg" onClick={e=>{navigate("/user/checkout")}}>Proceed to Checkout</button>
                 </div>
               </div>
             </>

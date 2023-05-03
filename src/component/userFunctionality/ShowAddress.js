@@ -64,7 +64,7 @@ const ShowAddress = (props) => {
                         )
                     })}
                     <div>
-                        <button className='btn-primary' onClick={e => { console.log("hi"); navigate("/user") }}>Back</button>
+                        <button className='btn-primary' onClick={e => {navigate("/user") }}>Back</button>
                     </div>
                 </table>
             }</>}
