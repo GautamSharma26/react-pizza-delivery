@@ -11,7 +11,7 @@ const User = () => {
     const refreshtokenvalue = localStorage.getItem("refresh")
     const customer_data = useSelector(state => state.tokenData.user)
     const dispatch = useDispatch();
-    const [count, setCount] = useState(0);
+    const [setCount] = useState(0);
     useEffect(() => {
 
         const intervalId = setInterval(() => {
