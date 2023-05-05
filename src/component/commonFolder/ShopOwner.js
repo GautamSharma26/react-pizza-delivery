@@ -2,47 +2,11 @@ import React, { useState, useEffect } from 'react';
 import Navbar from '../Navbar';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-// import axios from 'axios';
-// import { FetchUserDetail } from '../Authentication/UserDetailFetch';
 import { storeToken, token_validate, customer_data_get, shop_retrieve_data } from '../Authentication/Slice/TokenSlice';
 import jwtDecode from 'jwt-decode';
 
 
-/**
- * 
- */
 const ShopOwner = () => {
-    // const navigate = useNavigate();
-    // const refreshtokenvalue = localStorage.getItem("refresh")
-    // const dispatch = useDispatch();
-    // useEffect(() => {
-
-    //     const generateAccessToken = () => {
-    //         axios.post(`http://127.0.0.1:8000/generate_access_token/`, {
-    //             "refresh": refreshtokenvalue
-    //         })
-    //             .then(res => {
-    //                 dispatch(storeToken({ "access": res.data.access, "refresh": refreshtokenvalue }))
-    //                 const x = FetchUserDetail(dispatch, navigate)
-    //                 return x
-    //             }).then(x => {
-    //                 if (localStorage.getItem("is_shop_owner") === "false") {
-    //                     navigate("/no-shop-owner");
-    //                 }
-
-    //             })
-
-    //             .catch(err => {
-    //                 console.log(err)
-    //                 localStorage.clear()
-    //                 navigate("/loginredirect")
-    //             })
-    //     };
-
-    //     generateAccessToken();
-
-    //     // eslint-disable-next-line
-    // }, []);
 
     const navigate = useNavigate();
     const token_access = localStorage.getItem("access")
@@ -85,8 +49,6 @@ const ShopOwner = () => {
                                     });
                                 console.log(customer_data, "customer shop owner");
                             }
-
-                            // dispatch(storeToken({ "access": res.payload.access, "refresh": refreshtokenvalue }));
                         })
                 }
                 else {
