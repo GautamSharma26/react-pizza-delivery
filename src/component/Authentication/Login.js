@@ -20,9 +20,11 @@ function UserLogin() {
     const [textStatus, setTextStatus] = useState('')
     const postLogin = (e) => {
         const value = { statuslogin: "true" }
+        const api = process.env.REACT_APP_API_URL
+        console.log(api);
 
         e.preventDefault();
-        axios.post("http://127.0.0.1:8000/login/", {
+        axios.post(`${api}login/`, {
             email,
             password
         })

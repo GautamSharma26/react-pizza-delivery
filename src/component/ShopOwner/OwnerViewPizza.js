@@ -6,14 +6,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { deletePizzaData } from '../Authentication/Slice/TokenSlice';
 
 const OwnerViewPizza = (props) => {
+    const api = process.env.REACT_APP_API_URL
     // const[shop_id,setShopId]=useState(props.shopid)
     // console.log(props,shop_id,'dhhdhg')
     const pizza_shop = useSelector(state => state.tokenData.shop_pizza)
-    console.log(pizza_shop, "pizzzzzzzzz")
     const dispatch = useDispatch();
     const accesstokenvalue = localStorage.getItem("access")
     const dataa = useSelector(state => state.tokenData.data)
-    console.log(dataa, "lll")
 
     const deleteDataPizza = (e, id) => {
         e.preventDefault();
@@ -27,7 +26,7 @@ const OwnerViewPizza = (props) => {
     }
 
     useEffect(() => {
-        axios.get(`http://127.0.0.1:8000/product/product_view/${props.shopid}`, {
+        axios.get(`${api}product/product_view/${props.shopid}`, {
             headers: {
                 Authorization: `Bearer ${accesstokenvalue}`
             }

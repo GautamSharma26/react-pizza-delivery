@@ -3,10 +3,11 @@ import axios from "axios";
 
 
 const CreateAxiosInstance = () => {
+  const api = process.env.REACT_APP_API_URL
   // let token = localStorage.getItem("access")
   // console.log(localStorage.getItem("access"),"4");
   return axios.create({
-    baseURL: "http://127.0.0.1:8000/",
+    baseURL: `${api}`,
     headers: {
       Authorization: `Bearer ${localStorage.getItem("access")}`,
     },

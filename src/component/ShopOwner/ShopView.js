@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 const ShopView = () => {
+    const api = process.env.REACT_APP_API_URL
     const navigate = useNavigate();
 
     const [shopData, setShopData] = useState([])
@@ -14,9 +15,10 @@ const ShopView = () => {
 
     useEffect(() => {
 
-        axios.get(`http://127.0.0.1:8000/product/shop/`)
+        axios.get(`${api}product/shop/`)
             .then(res => [console.log(res.data), setShopData(res.data)])
             .catch(err => console.log(err))
+        // eslint-disable-next-line
     }, [])
 
     return <div>
@@ -40,9 +42,9 @@ const ShopView = () => {
                                 <td>{datashop.owner}</td>
                                 <td>{datashop.name}</td>
                                 <td>{datashop.location}</td>
-                                {token?
-                                <td><button onClick={e => { console.log("view"); navigate(`/user/shop-list-user/pizza-items/${datashop.id}`) }}>View</button></td>:
-                                <td><button onClick={e => { console.log("view"); navigate(`/shop-list/${datashop.id}/pizza/`) }}>View</button></td>
+                                {token ?
+                                    <td><button onClick={e => { console.log("view"); navigate(`/user/shop-list-user/pizza-items/${datashop.id}`) }}>View</button></td> :
+                                    <td><button onClick={e => { console.log("view"); navigate(`/shop-list/${datashop.id}/pizza/`) }}>View</button></td>
                                 }
                             </tr>
                         </tbody>

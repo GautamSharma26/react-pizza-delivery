@@ -29,16 +29,12 @@ const ShopOwner = () => {
             const currentTime = Date.now() / 1000;
             if (access_token_validity < currentTime) {
                 if (refresh_token_validity > currentTime) {
-                    console.log("sdfhjsdfds");
                     dispatch(token_validate({ "refresh": refreshtokenvalue }))
                         .then(res => {
-                            console.log(res);
                             if (res.type === "TokenSlice/token/fulfilled") {
-                                console.log("tok");
                                 dispatch(storeToken({ "access": res.payload.access, "refresh": refreshtokenvalue }));
                                 dispatch(customer_data_get({ "access": res.payload.access }))
                                     .then(res => {
-                                        console.log(res, "customer");
                                         const id = res.payload.user[0].id
                                         if (res.payload.user[0].is_shop_owner === true) {
                                             dispatch(shop_retrieve_data({ id: id }))
