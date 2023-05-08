@@ -12,7 +12,6 @@ const OwnerViewPizza = (props) => {
     const pizza_shop = useSelector(state => state.tokenData.shop_pizza)
     const dispatch = useDispatch();
     const accesstokenvalue = localStorage.getItem("access")
-    const dataa = useSelector(state => state.tokenData.data)
 
     const deleteDataPizza = (e, id) => {
         e.preventDefault();
