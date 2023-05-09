@@ -21,7 +21,6 @@ function UserLogin() {
     const postLogin = (e) => {
         const value = { statuslogin: "true" }
         const api = process.env.REACT_APP_API_URL
-        console.log(api);
 
         e.preventDefault();
         axios.post(`${api}login/`, {

@@ -19,8 +19,9 @@ const Registration = () => {
 
 
     const registerUser = (e) => {
+        const api = process.env.REACT_APP_API_URL
         e.preventDefault();
-        axios.post("http://127.0.0.1:8000/user_register/", {
+        axios.post(`${api}/user_register/`, {
             first_name,
             last_name,
             email,
