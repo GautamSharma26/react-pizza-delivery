@@ -81,7 +81,7 @@ console.log("djfsdus");
                                 {user['is_shop_owner'] === false && <Link to="/user/cart" className="dropdown-item">Cart</Link>}
                                 <div className="dropdown-divider"></div>
                                 {!refreshtokenvalue && <Link to="/login" className="dropdown-item">Login</Link>}
-                                {!user && <Link to="/registration" className="dropdown-item">Registration</Link>}
+                                {!refreshtokenvalue && <Link to="/registration" className="dropdown-item">Registration</Link>}
                                 {refreshtokenvalue && <button className="dropdown-item" onClick={e => { LogoutUser(e) }}>Logout</button>}
                             </div>
                         </li>
