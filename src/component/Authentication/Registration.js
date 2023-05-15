@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios"
-import { useSelector } from "react-redux";
 // import registerimg from "../../images/registration.jpg";
 
 const Registration = () => {
-    const loginStatus = useSelector(state => state.tokenData.loginstatus);
-    console.log(loginStatus, "st")
     const [first_name, setFirstname] = useState('');
     const [last_name, setLastname] = useState('');
     const [email, setEmail] = useState('');
@@ -32,7 +29,6 @@ const Registration = () => {
             password2
         })
             .then(res => setStatus(res.statusText))
-            .catch(err => console.log(err))
     }
 
     const radioResult = (e) => {
@@ -130,7 +126,7 @@ const Registration = () => {
                                                     <input className="form-check-input" type="radio"
                                                         name="flexRadioDefault" id="flexRadioDefault1"
                                                         value="is_shop_owner"
-                                                        checked={is_shop_owner === "true"}
+                                                        // checked={is_shop_owner === "true"}
                                                         onChange={(e) => radioResult(e.target)} />
                                                     <label className="form-check-label" htmlFor="flexRadioDefault1">
                                                         is_shop_owner
@@ -142,7 +138,7 @@ const Registration = () => {
                                                         // checked={is_delivery_boy===true}
                                                         type="radio" name="flexRadioDefault" id="flexRadioDefault2"
                                                         value="is_delivery_boy"
-                                                        checked={is_delivery_boy === "true"}
+                                                        // checked={is_delivery_boy === "true"}
                                                         onChange={(e) => radioResult(e.target)} />
                                                     <label className="form-check-label" htmlFor="flexRadioDefault2">
                                                         is_delivery_boy
