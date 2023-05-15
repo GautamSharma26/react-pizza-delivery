@@ -4,17 +4,14 @@ import { useDispatch, useSelector } from "react-redux";
 import logoLogin from "../../images/logologin.jpeg";
 import { Link, useNavigate } from "react-router-dom";
 import { storeToken, loginStatus, customer_data_get } from "./Slice/TokenSlice";
+import swal from "sweetalert";
+import { useRef } from "react";
 
 
 function UserLogin() {
-
+    const passwordInput = useRef(null)
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const user = useSelector(state => state.tokenData.user)
-
-    // console.log(user,"lk");
-    // console.log(refreshtokenvalue,"r",accesstokenvalue)
-    const accesstokenvalue = useSelector((state) => state.tokenData.accesstoken)
     const [email, SetEmail] = useState('');
     const [password, setPassword] = useState('');
     const [textStatus, setTextStatus] = useState('')
@@ -31,42 +28,42 @@ function UserLogin() {
                 dispatch(storeToken(res.data))
                 setTextStatus(res.statusText)
                 dispatch(loginStatus(value))
-                console.log(accesstokenvalue, 'df');
                 dispatch(customer_data_get({ "access": res.data.access }))
                     .then(res => {
                         console.log(res);
                         if (res.payload.user[0].is_shop_owner === true) {
                             navigate("/shop-owner");
-                            console.log("oewjrjkere");
 
                         }
                         if (res.payload.user[0].is_delivery_boy === true) {
-                            console.log("owner");
                             navigate("/user")
                         }
                         if (res.payload.user[0].is_delivery_boy === false && res.payload.user[0].is_shop_owner === false) {
-                            console.log("owner");
                             navigate("/user")
                         }
                     });
                 // navigate("/user")
             })
             .catch(err => {
-                setTextStatus(err.statusText)
+                setTextStatus(err.statusText);
+                swal("Ooh!", "Login Failed", "warning");
             })
     }
 
     useEffect(() => {
-        console.log(user, "effe");
-        // if (!isFirstLoad) {
-        //     window.location.reload();
-        // } else {
-        //     setIsFirstLoad(false)
-        // }
         SetEmail('');
         setPassword('');
-        // eslint-disable-next-line
     }, [textStatus])
+
+    function showPassword(e) {
+        // This fn is used to show password in text format and vice-versa
+        if (passwordInput.current.type==="password"){
+            passwordInput.current.type="text"
+        }
+        else{
+            passwordInput.current.type="password"
+        }
+    }
     return (
         <div className="container-fluid">
             <div className="row">
@@ -90,7 +87,12 @@ function UserLogin() {
                                     {/* <!-- Password input --> */}
                                     <div className="form-outline mb-4">
                                         <label className="form-label" htmlFor="form2Example2">Password</label>
-                                        <input type="password" id="form2Example2" className="form-control" value={password} onChange={(e) => setPassword(e.target.value)} />
+                                        <input type="password" id="form2Example2" ref={passwordInput} className="form-control" value={password} onChange={(e) => setPassword(e.target.value)} />
+                                    </div>
+
+                                    {/* <!--Show Password input --> */}
+                                    <div className="form-outline mb-4 text-center">
+                                        <input type="checkbox" onClick={e => showPassword(e)} defaultChecked={false}/> Show Password
                                     </div>
 
                                     {/* <!-- 2 column grid layout for inline styling --> */}

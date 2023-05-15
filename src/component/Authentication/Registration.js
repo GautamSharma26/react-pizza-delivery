@@ -5,8 +5,8 @@ import { useSelector } from "react-redux";
 // import registerimg from "../../images/registration.jpg";
 
 const Registration = () => {
-    const loginStatus = useSelector(state=>state.tokenData.loginstatus);
-    console.log(loginStatus,"st")
+    const loginStatus = useSelector(state => state.tokenData.loginstatus);
+    console.log(loginStatus, "st")
     const [first_name, setFirstname] = useState('');
     const [last_name, setLastname] = useState('');
     const [email, setEmail] = useState('');
@@ -21,7 +21,7 @@ const Registration = () => {
     const registerUser = (e) => {
         const api = process.env.REACT_APP_API_URL
         e.preventDefault();
-        axios.post(`${api}/user_register/`, {
+        axios.post(`${api}user_register/`, {
             first_name,
             last_name,
             email,
@@ -150,18 +150,14 @@ const Registration = () => {
                                                 </div>
                                             </div>
                                         </div>
-
                                         <div class="mt-4 pt-2 text-center">
                                             <input class="btn btn-primary btn-lg" type="submit" value="Submit" />
                                         </div>
-
                                     </form>
                                     <div className="text-center">
                                         <p>Already have an account?<Link to="/login">Login</Link></p>
                                     </div>
-
                                 </div>
-
                             </div>
                         </div>
                     </div>

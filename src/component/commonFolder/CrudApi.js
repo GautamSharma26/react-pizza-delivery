@@ -66,6 +66,10 @@ const shop_data_retrieve = id =>{
 const pizza_data = id =>{
   return api_http().get(`product/pizza-data/${id}/`);
 }
+
+const payment_init = data =>{
+  return http().post(`/product/order/`,data);
+} 
 const CrudApi={
     remove,
     retrieve_customer,
@@ -81,6 +85,7 @@ const CrudApi={
     cart_item_del,
     cart_item_update,
     shop_data_retrieve,
-    pizza_data
+    pizza_data,
+    payment_init
 }
 export default CrudApi;

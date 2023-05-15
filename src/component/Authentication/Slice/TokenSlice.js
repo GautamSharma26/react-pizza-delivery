@@ -131,6 +131,15 @@ export const data_pizza = createAsyncThunk(
     }
 )
 
+export const pizza_payment = createAsyncThunk(
+    "TokenSlice/paymetInit",
+    async(data)=>{
+        console.log(data);
+        const payment_data = await CrudApi.payment_init(data);
+        return payment_data.data;
+    }
+)
+
 const TokenSlice = createSlice({
     name: "TokenSlice",
     initialState,

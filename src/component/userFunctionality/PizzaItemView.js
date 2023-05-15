@@ -16,13 +16,13 @@ const PizzaItemView = () => {
     }, [])
     function JSalert() {
 
-        swal("Congrats!", "Your account is created!", "success");
+        swal("Yup!", "Pizza Added to Cart!", "success");
 
     }
 
     function JSalertWarn() {
 
-        swal( "You have already added pizza from another SHOP!");
+        swal("Uuf!","You have already added pizza from another SHOP!","warning");
 
     }
 

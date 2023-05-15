@@ -19,6 +19,8 @@ import ShowAddress from './component/userFunctionality/ShowAddress';
 import PizzaItemView from './component/userFunctionality/PizzaItemView';
 import PizzaViewCommon from './component/commonFolder/PizzaViewCommon';
 import Checkout from './component/userFunctionality/cart/Checkout';
+import PaymentStripe from './component/userFunctionality/cart/PaymentStripe';
+import SuccessPayment from './component/userFunctionality/cart/SuccessPayment';
 
 
 function App() {
@@ -48,6 +50,8 @@ function App() {
           <Route path='shop-list-user' element={<ShopView />} />
           <Route path='shop-list-user/pizza-items/:id' element={<PizzaItemView />} />
           <Route path='checkout' element={<Checkout/>}/>
+          <Route path='payment' element={<PaymentStripe/>}/>
+          <Route path='payment/success' element={<SuccessPayment/>}/>
           <Route path='*' element={<NoPage />} />
         </Route>
 

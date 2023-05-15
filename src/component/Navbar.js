@@ -15,27 +15,26 @@ const Navbar = () => {
     const user = useSelector(state => state.tokenData.user)
     // const user = JSON.parse(localStorage.getItem("user"))
     const refreshtokenvalue = localStorage.getItem("refresh")
-    console.log(refreshtokenvalue===null);
-    useEffect(()=>{
-console.log("djfsdus");
-    },[])
+    console.log(refreshtokenvalue === null);
+    // useEffect(() => {
+    //     console.log("djfsdus");
+    // }, [])
 
     console.log(refreshtokenvalue);
     function LogoutUser(e) {
         if (refreshtokenvalue !== "") {
-            console.log("logout",refreshtokenvalue);
+            console.log("logout", refreshtokenvalue);
             dispatch(logout_user_slice({ "refresh": refreshtokenvalue }))
                 .then(res => {
-                    console.log(res);
+                    console.log(res,"dhhhhhhhhhh");
                     if (res.type === "TokenSlice/logout/fulfilled") {
                         localStorage.clear();
-                        window.location.reload(true);
-                        navigate("/loginredirect");
+                        // window.location.reload(true);
+                        navigate("/login");
                     }
                 })
         }
     }
-    console.log(user);
 
     return (
         <>
@@ -78,7 +77,9 @@ console.log("djfsdus");
                                 {user['is_shop_owner'] === true && <Link to="/shop-owner/add-pizza" className="dropdown-item">Add Pizza</Link>}
                                 <Link to="/shop-list" className="dropdown-item">View All Shop</Link>
                                 {user['is_shop_owner'] === false && <Link to="/user" className="dropdown-item">Customer</Link>}
-                                {user['is_shop_owner'] === false && <Link to="/user/cart" className="dropdown-item">Cart</Link>}
+
+                                {refreshtokenvalue && <Link to="/user/cart" className="dropdown-item">Cart</Link>}
+
                                 <div className="dropdown-divider"></div>
                                 {!refreshtokenvalue && <Link to="/login" className="dropdown-item">Login</Link>}
                                 {!refreshtokenvalue && <Link to="/registration" className="dropdown-item">Registration</Link>}
@@ -86,10 +87,10 @@ console.log("djfsdus");
                             </div>
                         </li>
                     </ul>
-                    {refreshtokenvalue&&
-                    <form class="d-flex">
-                        <Link to="/user/cart"> <i className="fa badge" style={{ fontSize: "24px" }} value={user['total_items']} >&#xf07a;</i></Link>
-                    </form>}
+                    {refreshtokenvalue &&
+                        <form class="d-flex">
+                            <Link to="/user/cart"> <i className="fa badge" style={{ fontSize: "24px" }} value={user['total_items']} >&#xf07a;</i></Link>
+                        </form>}
                 </div>
             </nav>
         </>

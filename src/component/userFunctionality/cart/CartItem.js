@@ -143,7 +143,7 @@ const CartItem = () => {
             </div>
               <div className="card">
                 <div className="card-body">
-                  <button type="button" className="btn btn-warning btn-block btn-lg" onClick={e=>{navigate("/user/checkout")}}>Proceed to Checkout</button>
+                  <button type="button" className="btn btn-warning btn-block btn-lg" onClick={e=>{navigate("/user/payment")}}>Proceed to Checkout</button>
                 </div>
               </div>
             </>
