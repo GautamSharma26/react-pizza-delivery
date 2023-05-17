@@ -5,7 +5,7 @@ import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 
 const CartItem = () => {
@@ -20,6 +20,7 @@ const CartItem = () => {
     function handleOnDispatch() {
       user.length !== 0 &&
         dispatch(getCart({ id: user['id'] }))
+
           .then(res => {
             setCartData(res.payload[0])
           })
@@ -28,6 +29,7 @@ const CartItem = () => {
     handleOnDispatch();
     setUpdateAdd("false");
     setUpdateRemove("false");
+    setDeleteStatus("false")
 
     // eslint-disable-next-line
   }, [user, statusdelete, statusupdate, statusRemove])
@@ -38,6 +40,7 @@ const CartItem = () => {
       .then(res => {
         if (res.type === "TokenSlice/DelItemCart/fulfilled") {
           setDeleteStatus("true");
+          navigate("/user/cart")
           // window.location.reload(true);
         }
       })
@@ -51,7 +54,7 @@ const CartItem = () => {
         if (res.type === "TokenSlice/ItemUpdateQunatity/fulfilled") {
           setUpdateAdd("true");
           navigate("/user/cart")
-          
+
           // window.location.reload(true);
         }
       })
@@ -63,11 +66,9 @@ const CartItem = () => {
       .then(res => {
         if (res.type === "TokenSlice/ItemUpdateQunatity/fulfilled") {
           setUpdateRemove("true");
-          // window.location.reload(true);
         }
       })
   }
-
 
   return (
 
@@ -136,18 +137,21 @@ const CartItem = () => {
               </div>
             </div></>
             }
-            {cartData && <><div className="card">
+            {cartData && cartData.data_pizza.length > 0 ? <><div className="card">
               <div className="card-body">
                 <h2>Total Price :  {cartData.total_amount}</h2>
               </div>
             </div>
               <div className="card">
                 <div className="card-body">
-                  <button type="button" className="btn btn-warning btn-block btn-lg" onClick={e=>{navigate("/user/payment")}}>Proceed to Checkout</button>
+                  <button type="button" className="btn btn-warning btn-block btn-lg" onClick={e => { navigate("/user/payment") }}>Proceed to Checkout</button>
+
                 </div>
               </div>
-            </>
+              <Link to="/shop-list">Continue Shopping</Link>
+            </> : <><Link to="/shop-list">Continue Shopping</Link></>
             }
+
 
           </div>
         </div>

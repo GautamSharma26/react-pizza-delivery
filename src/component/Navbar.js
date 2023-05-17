@@ -13,20 +13,20 @@ const Navbar = () => {
     const loginStatusData = useSelector((state) => state.tokenData.loginstatus);
     const handleClose = () => dispatch(loginStatus(value))
     const user = useSelector(state => state.tokenData.user)
+    const total_item = user['total_items']
+    // const cartDataCount = useSelector((state) => state.tokenData.loginstatus);
     // const user = JSON.parse(localStorage.getItem("user"))
     const refreshtokenvalue = localStorage.getItem("refresh")
     console.log(refreshtokenvalue === null);
-    // useEffect(() => {
-    //     console.log("djfsdus");
-    // }, [])
+    useEffect(() => {
+        console.log("djfsdus");
+    }, [total_item])
 
-    console.log(refreshtokenvalue);
     function LogoutUser(e) {
         if (refreshtokenvalue !== "") {
             console.log("logout", refreshtokenvalue);
             dispatch(logout_user_slice({ "refresh": refreshtokenvalue }))
                 .then(res => {
-                    console.log(res,"dhhhhhhhhhh");
                     if (res.type === "TokenSlice/logout/fulfilled") {
                         localStorage.clear();
                         // window.location.reload(true);

@@ -60,7 +60,6 @@ export const getCart = createAsyncThunk(
 export const pizza_items = createAsyncThunk(
     "TokenSlice/pizzaItem",
     async ({id}) =>{
-        console.log("item",id);
         const item_pizza = await CrudApi.view_pizza_items(id);
         return item_pizza.data
     }
@@ -182,68 +181,53 @@ const TokenSlice = createSlice({
     extraReducers: builder => {
         builder
             .addCase(deletePizzaData.pending, state => {
-                console.log("start")
                 state.loading = true
             })
             .addCase(deletePizzaData.fulfilled, (state, action) => {
-                console.log("fulfilled")
                 state.loading = false
             })
             .addCase(deletePizzaData.rejected, state => {
-                console.log("rejected")
                 state.loading = false
             })
             .addCase(fetchAddress.pending, state =>{
-                console.log("start")
                 state.loading = true
             })
             .addCase(fetchAddress.fulfilled, (state,action)=>{
-                console.log("fulfilled",action.payload)
                 state.loading = false
                 state.address=JSON.stringify(action.payload)
             })
             .addCase(fetchAddress.rejected, state =>{
-                console.log("rejected")
                 state.loading = false
             })
             .addCase(updateAddressData.fulfilled, (state,action)=>{
                 state.loading= false
-                console.log("updated");
             })
             .addCase(createAddress.fulfilled, state =>{
                 state.loading = false
-                console.log("address created");
             })
             .addCase(getCart.fulfilled, (state,action) =>{
                 state.loading = false
                 state.cart_data=action.payload
-                console.log("cart get");
             })
             .addCase(pizza_items.fulfilled, (state,action)=>{
                 state.pizza_data = action.payload
-                console.log(action.payload,"pizza");
                 state.loading=false
-                console.log("dbf");
             })
             .addCase(token_validate.fulfilled, (state,action) =>{
                 state.loading=false;
                 localStorage.setItem("access", action.payload.access);
-                console.log("to",action.payload);
             })
             .addCase(customer_data_get.fulfilled, (state,action) =>{
                 state.loading=false;
                 localStorage.setItem("user",JSON.stringify(action.payload.user[0]))
                 state.user=JSON.parse(localStorage.getItem("user"))
-                console.log("as");
             })
             .addCase(logout_user_slice.fulfilled, (state,action)=>{
                 state.loading=false;
-                console.log(action.payload);
                 
             })
             .addCase(items_add_cart.fulfilled, state=>{
                 state.loading = false;
-                console.log(state);
             })
             .addCase(shop_retrieve_data.fulfilled, (state,action)=>{
                 state.loading=false;

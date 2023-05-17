@@ -1,17 +1,20 @@
-import React, { useEffect } from 'react'
+import React, { useEffect,useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useParams, useNavigate } from 'react-router-dom'
 import { pizza_items, items_add_cart } from '../Authentication/Slice/TokenSlice'
 import { Fragment } from 'react'
 import swal from 'sweetalert';
+import { Navbar } from 'react-bootstrap'
 
 const PizzaItemView = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     let { id } = useParams();
     const pizza_data = useSelector(state => state.tokenData.pizza_data.data)
+    
+    
     useEffect(() => {
-        dispatch(pizza_items({ id: id }))
+        dispatch(pizza_items({ id: id }));
         // eslint-disable-next-line
     }, [])
     function JSalert() {
@@ -30,9 +33,12 @@ const PizzaItemView = () => {
         e.preventDefault();
         dispatch(items_add_cart({ pizza: id, quantity: 1 }))
             .then(res => {
-                console.log(res);
+                console.log(res.meta.requestId);
                 if (res.type === "TokenSlice/pizzaCartItems/fulfilled") {
-                    JSalert();
+                    navigate("/user/cart")
+                    // setItem(res.meta.requestId);
+                    // dispatch(customer_data_get({ "access": res.payload.access }))
+                    // JSalert();
                 }
                 if (res.type === "TokenSlice/pizzaCartItems/rejected" && res.error.message === "Request failed with status code 406") {
                     JSalertWarn();
