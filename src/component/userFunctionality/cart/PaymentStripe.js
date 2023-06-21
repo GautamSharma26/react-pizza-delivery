@@ -23,7 +23,7 @@ const PaymentStripe = () => {
     }, [user])
 
     function handleOnClick(e) {
-        dispatch(pizza_payment({ address: "4" }))
+        dispatch(pizza_payment({ address: "3" }))
             .then(res => {
                 console.log(res.payload);
                 const value = res.payload;

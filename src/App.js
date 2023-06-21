@@ -28,6 +28,7 @@ function App() {
     <>
       <Routes>
         <Route path='/' element={<Frontend />}>
+          <Route index element={<UserLogin />}></Route>
           <Route path="/login" element={<UserLogin />} />
           <Route path="/registration" element={<Registration />} />
           <Route path="/resetpassword" element={<ResetPassword />} />
