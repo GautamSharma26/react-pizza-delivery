@@ -21,9 +21,21 @@ import PizzaViewCommon from './component/commonFolder/PizzaViewCommon';
 import Checkout from './component/userFunctionality/cart/Checkout';
 import PaymentStripe from './component/userFunctionality/cart/PaymentStripe';
 import SuccessPayment from './component/userFunctionality/cart/SuccessPayment';
+import {useEffect} from "react";
+import React from 'react';
+import { requestForToken } from "./firebase"
+import Notification from "./component/Notification";
 
 
 function App() {
+  useEffect(()=>{
+    const Notification = () => {
+      requestForToken();
+      //....
+    }
+    Notification();
+  })
+
   return (
     <>
       <Routes>
@@ -46,6 +58,7 @@ function App() {
         </Route>
         <Route path='user' element={<User />}>
           <Route index element={<Sidebar />} />
+          <Route path='noti-message' element={<Notification/>}/>
           <Route path='show-address' element={<ShowAddress />} />
           <Route path='cart' element={<CartItem />} />
           <Route path='shop-list-user' element={<ShopView />} />

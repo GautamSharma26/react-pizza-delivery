@@ -7,7 +7,6 @@ import { storeToken, loginStatus, customer_data_get } from "./Slice/TokenSlice";
 import swal from "sweetalert";
 import { useRef } from "react";
 
-
 function UserLogin() {
     const passwordInput = useRef(null)
     const navigate = useNavigate();
